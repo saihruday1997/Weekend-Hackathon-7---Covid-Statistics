@@ -25,7 +25,9 @@ app.get("/totalRecovered", (req, res) => {
             }
         };
 
-        res.send(response);
+        if(!err) {
+            res.send(response);
+        }
     });
 });
 
@@ -47,7 +49,9 @@ app.get("/totalActive" , (req, res) => {
            }
        }
 
-       res.send(response);
+       if(!err) {
+           res.send(response);
+       }
    })
 });
 
@@ -67,7 +71,9 @@ app.get("/totalDeath", (req, res) => {
             }
         }
 
-        res.send(response);
+        if(!err) {
+            res.send(response);
+        }
     })
 });
 
@@ -89,7 +95,9 @@ app.get("/hotspotStates", ((req, res) => {
             $gt: 0.1
             }}
     }]).then((result, err) => {
-        res.send({data: result});
+        if(!err) {
+            res.send({data: result});
+        }
     })
 }));
 
@@ -105,8 +113,10 @@ app.get("/healthyStates", (req, res) => {
         }
     }, {
         $match: {mortality: {$lt: 0.005}}
-    }]).then((result) => {
-        res.send({data: result});
+    }]).then((result, err) => {
+        if(!err) {
+            res.send({data: result});
+        }
     })
 });
 
