@@ -93,6 +93,23 @@ app.get("/hotspotStates", ((req, res) => {
     })
 }));
 
+app.get("/healthyStates", (req, res) => {
+    connection.aggregate([{
+        $project: {
+            state: 1,
+            mortality: {
+                $round: [{
+                    $divide: ["$death", "$infected"]
+                },5]
+            }
+        }
+    }, {
+        $match: {mortality: {$lt: 0.005}}
+    }]).then((result, err) => {
+        res.send({data: result});
+    })
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 module.exports = app;
