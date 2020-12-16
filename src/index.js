@@ -6,6 +6,7 @@ const port = 8080
 // Parse JSON bodies (as sent by API clients)
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 const { connection } = require('./connector')
 
 app.get("/totalRecovered", (req, res) => {
