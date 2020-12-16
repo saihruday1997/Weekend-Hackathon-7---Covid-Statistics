@@ -8,7 +8,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const { connection } = require('./connector')
 
+app.get("/totalRecovered", (req, res) => {
+    connection.aggregate([{
+        $group: {
+            _id: null,
+            total: {
+                $sum: "$recovered"
+            }
+        }
+    }]).then((result) => {
+        let response = {
+            _id: "total",
+            recovered: result[0].total.$sum
+        }
 
+        res.send(response);
+    }).catch(err => res.send(err));
+});
 
 
 
