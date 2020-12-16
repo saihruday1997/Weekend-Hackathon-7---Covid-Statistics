@@ -71,7 +71,27 @@ app.get("/totalDeath", (req, res) => {
     })
 });
 
-
+app.get("/hotspotStates", ((req, res) => {
+    connection.aggregate([{
+        $project: {
+            state: 1,
+            rate: {
+                $round: [
+                    {
+                    $divide: [{
+                        $subtract: ["$infected", "$recovered"]
+                    }, "$infected"]
+                },5]
+            }
+        }
+    },{
+        $match: {rate: {
+            $gt: 0.1
+            }}
+    }]).then((result, err) => {
+        res.send({data: result});
+    })
+}));
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
