@@ -17,14 +17,14 @@ app.get("/totalRecovered", (req, res) => {
                 $sum: "$recovered"
             }
         }
-    }]).then((result) => {
+    }]).then((result, err) => {
         let response = {
             _id: "total",
-            recovered: result[0].total.$sum
+            recovered: result[0].total
         }
 
         res.send(response);
-    }).catch(err => res.send(err));
+    });
 });
 
 
