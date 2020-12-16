@@ -51,6 +51,25 @@ app.get("/totalActive" , (req, res) => {
    })
 });
 
+app.get("/totalDeath", (req, res) => {
+    connection.aggregate([{
+        $group: {
+            _id: null,
+            total: {
+                $sum: "$death"
+            }
+        }
+    }]).then((result, err) => {
+        let response = {
+            data: {
+                _id: "total",
+                death: result[0].total
+            }
+        }
+
+        res.send(response);
+    })
+});
 
 
 
