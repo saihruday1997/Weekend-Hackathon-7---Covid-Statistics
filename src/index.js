@@ -29,6 +29,28 @@ app.get("/totalRecovered", (req, res) => {
     });
 });
 
+app.get("/totalActive" , (req, res) => {
+   connection.aggregate([{
+       $group: {
+           _id: null,
+           total: {
+               $sum :{
+                   $subtract: ["$infected", "$recovered"]
+               }
+           }
+       }
+   }]).then((result, err) => {
+       let response = {
+           data: {
+               _id: "total",
+               active: result[0].total
+           }
+       }
+
+       res.send(response);
+   })
+});
+
 
 
 
