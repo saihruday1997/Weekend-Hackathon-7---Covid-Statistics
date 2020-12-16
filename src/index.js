@@ -105,7 +105,7 @@ app.get("/healthyStates", (req, res) => {
         }
     }, {
         $match: {mortality: {$lt: 0.005}}
-    }]).then((result, err) => {
+    }]).then((result) => {
         res.send({data: result});
     })
 });
