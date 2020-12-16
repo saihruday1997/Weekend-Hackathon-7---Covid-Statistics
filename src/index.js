@@ -19,9 +19,11 @@ app.get("/totalRecovered", (req, res) => {
         }
     }]).then((result, err) => {
         let response = {
-            _id: "total",
-            recovered: result[0].total
-        }
+            data: {
+                _id: "total",
+                recovered: result[0].total
+            }
+        };
 
         res.send(response);
     });
